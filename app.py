@@ -97,10 +97,11 @@ st.write(
     "between vectors can encode semantic relationships between words."
 )
 
-tab1, tab2, tab3, tab4 = st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "Word Similarity",
     "Analogy Explorer",
     "Embedding Visualization",
+    "SVD Explorer",
     "Theory Notes"
 ])
 
@@ -224,8 +225,84 @@ with tab3:
             "component": ["PC1", "PC2"],
             "explained_variance_ratio": pca.explained_variance_ratio_
         }), use_container_width=True)
-
+        
 with tab4:
+    st.header("SVD Explorer: Low-Rank Approximation")
+
+    st.write(
+        "This tab demonstrates how Singular Value Decomposition (SVD) can approximate a word co-occurrence matrix "
+        "using a lower-rank matrix. This is the same idea behind truncated SVD and "
+        "Latent Semantic Analysis."
+    )
+
+    words = ["cat", "dog", "pet", "basketball", "team", "doctor"]
+    A = np.array([
+        [0, 35, 42, 1, 0, 0],
+        [35, 0, 38, 0, 0, 0],
+        [42, 38, 0, 0, 0, 0],
+        [1, 0, 0, 0, 30, 0],
+        [0, 0, 0, 30, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+    ], dtype=float)
+
+    k = st.slider("Choose rank k", min_value=1, max_value=len(words), value=2)
+
+    U, singular_values, Vt = np.linalg.svd(A, full_matrices=False)
+
+    Sigma_k = np.diag(singular_values[:k])
+    U_k = U[:, :k]
+    Vt_k = Vt[:k, :]
+
+    A_k = U_k @ Sigma_k @ Vt_k
+
+    error = np.linalg.norm(A - A_k, ord="fro")
+
+    st.latex(r"A_k = U_k \Sigma_k V_k^T")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.subheader("Original co-occurrence matrix A")
+        st.dataframe(
+            pd.DataFrame(A, index=words, columns=words),
+            use_container_width=True
+        )
+
+    with col2:
+        st.subheader(f"Rank-{k} approximation A_k")
+        st.dataframe(
+            pd.DataFrame(np.round(A_k, 2), index=words, columns=words),
+            use_container_width=True
+        )
+
+    st.subheader("Singular values")
+    singular_df = pd.DataFrame({
+        "index": np.arange(1, len(singular_values) + 1),
+        "singular_value": singular_values
+    })
+
+    fig, ax = plt.subplots(figsize=(8, 4))
+    sns.barplot(
+        data=singular_df,
+        x="index",
+        y="singular_value",
+        ax=ax
+    )
+    ax.set_title("Singular Values of the Co-occurrence Matrix")
+    ax.set_xlabel("Singular value index")
+    ax.set_ylabel("Singular value")
+    st.pyplot(fig)
+
+    st.metric("Frobenius reconstruction error", f"{error:.4f}")
+
+    st.write(
+        "As k increases, the approximation captures more of the original matrix. "
+        "Small k values produce simpler, lower-rank matrices that preserve the strongest "
+        "patterns while discarding weaker structure or noise."
+    )
+
+
+with tab5:
     st.header("Theory Notes")
 
     st.subheader("Words as Vectors")
