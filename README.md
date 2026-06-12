@@ -2,7 +2,7 @@
 
 # Linear Algebra in Modern NLP
 
-This Streamlit application accompanies my Applied Linear Algebra final project, **Linear Algebra in Modern Natural Language Processing: Word Embeddings, Matrix Factorization, and Transformers**.
+This Streamlit application accompanies a Applied Linear Algebra final project, **Linear Algebra in Modern Natural Language Processing: Word Embeddings, Matrix Factorization, and Transformers**.
 
 The goal of the app is to provide interactive demonstrations of several core linear algebra concepts used in natural language processing, including:
 
