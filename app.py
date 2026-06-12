@@ -256,6 +256,10 @@ with tab4:
     A_k = U_k @ Sigma_k @ Vt_k
 
     error = np.linalg.norm(A - A_k, ord="fro")
+    rank_A = np.linalg.matrix_rank(A)
+    rank_Ak = np.linalg.matrix_rank(A_k)
+
+    variance_explained = np.sum(singular_values[:k]**2) / np.sum(singular_values**2)
 
     st.latex(r"A_k = U_k \Sigma_k V_k^T")
 
@@ -292,6 +296,17 @@ with tab4:
     ax.set_xlabel("Singular value index")
     ax.set_ylabel("Singular value")
     st.pyplot(fig)
+
+    m1, m2, m3 = st.columns(3)
+
+    with m1:
+        st.metric("Rank of original matrix", rank_A)
+
+    with m2:
+        st.metric(f"Rank of A_{k}", rank_Ak)
+
+    with m3:
+        st.metric("Variance explained", f"{100 * variance_explained:.2f}%")
 
     st.metric("Frobenius reconstruction error", f"{error:.4f}")
 
