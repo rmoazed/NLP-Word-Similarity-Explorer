@@ -239,7 +239,7 @@ with tab4:
     st.latex(r"\cos(\theta)=\frac{u\cdot v}{\|u\|\|v\|}")
     st.write(
         "Cosine similarity measures whether two vectors point in similar directions. "
-        "In embedding spaces, similar directions often correspond to similar linguistic contexts."
+        "In embedding spaces, similar directions often correspond to similar linguistic contexts and semantic patterns."
     )
 
     st.subheader("Dimensionality Reduction")
@@ -251,6 +251,6 @@ with tab4:
 
     st.subheader("Important Note")
     st.write(
-        "This app uses intentionally simple demo vectors. In a full NLP system, embeddings "
+        "This app uses intentionally simple demo vectors that are pre-configured. In a full NLP system, embeddings "
         "would be learned from a large corpus using a method such as Word2Vec, GloVe, or a transformer model."
     )
