@@ -13,6 +13,12 @@ The goal of the app is to provide interactive demonstrations of several core lin
 * Singular Value Decomposition (SVD)
 * Low-rank matrix approximation
 
+# Explore App
+
+Below is the link to the interactive app.
+
+[Streamlit App](https://[https://nlp-word-similarity-explorer-3ib6astiybvefsgvecsdcy.streamlit.app/])
+
 ## Features
 
 ### Word Similarity Explorer
