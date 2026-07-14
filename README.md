@@ -17,7 +17,7 @@ The goal of the app is to provide interactive demonstrations of several core lin
 
 Below is the link to the interactive app.
 
-[Streamlit App]([https://nlp-word-similarity-explorer-3ib6astiybvefsgvecsdcy.streamlit.app/])
+[Streamlit App](https://nlp-word-similarity-explorer-3ib6astiybvefsgvecsdcy.streamlit.app/)
 
 ## Features
 
